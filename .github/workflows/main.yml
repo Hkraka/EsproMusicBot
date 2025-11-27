@@ -1,28 +1,36 @@
-name: Telegram Music Bot
+name: Espro Music Bot
 
 on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */8 * * *"  # 8 ghante me ek baar auto restart
 
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Set up Python
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
+        python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
-        pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run bot
+    - name: Run Bot
+      env:
+        API_ID: ${{ secrets.API_ID }}
+        API_HASH: ${{ secrets.API_HASH }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        LOGGER_ID: ${{ secrets.LOGGER_ID }}
+        MONGO_DB_URI: ${{ secrets.MONGO_DB_URI }}
+        OWNER_ID: ${{ secrets.OWNER_ID }}
+        STRING_SESSION: ${{ secrets.STRING_SESSION }}
       run: |
-        python3 -m EsproMusic
+        python bot.py
