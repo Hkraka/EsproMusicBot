@@ -33,4 +33,4 @@ jobs:
         OWNER_ID: ${{ secrets.OWNER_ID }}
         STRING_SESSION: ${{ secrets.STRING_SESSION }}
       run: |
-        python bot.py
+        python -m EsproMusic
